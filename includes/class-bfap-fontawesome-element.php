@@ -1,11 +1,15 @@
 <?php
-namespace Bricks;
+
+namespace BFAP;
+
+use BFAP\FontAwesome;
+use BFAP\FontAwesome_Pro;
 
 if ( ! defined( 'ABSPATH' ) ) {
   exit; // Exit if accessed directly
 }
 
-class BFAP_Fontawesome_Element extends Element {
+class BFAP_Fontawesome_Element extends \Bricks\Element {
   public $category = 'General';
   public $name     = 'bfap-fontawesome-element';
   public $icon     = 'fa-brands fa-font-awesome';
@@ -20,12 +24,12 @@ class BFAP_Fontawesome_Element extends Element {
       'type'       => 'select',
       'label'      => __( 'Select Icon', 'bricks-builder-fontawesome-pro' ),
       'name'       => 'fa_icon',
-      'options'    => bfap_get_fontawesome_icons_list(), // from the main plugin file
+      'options'    => FontAwesome::get_fontawesome_icons_list(), // from the main plugin file
       'searchable' => true,
     ];
 
     // Weight select (user can override plugin default)
-    $valid_weights = bfap_is_pro_version() ? [
+    $valid_weights = FontAwesome::is_pro_version() ? [
       'regular' => __( 'Regular', 'bricks-builder-fontawesome-pro' ),
       'solid'   => __( 'Solid', 'bricks-builder-fontawesome-pro' ),
       'light'   => __( 'Light', 'bricks-builder-fontawesome-pro' ),
@@ -41,7 +45,7 @@ class BFAP_Fontawesome_Element extends Element {
       'options' => $valid_weights,
     ];
 
-    if ( bfap_is_pro_version() ) {
+    if ( FontAwesome::is_pro_version() ) {
       // Family select (user can override plugin default)
       $this->controls['fa_family'] = [
         'type'    => 'select',
@@ -108,7 +112,7 @@ class BFAP_Fontawesome_Element extends Element {
     } else {
       // Fallback if user left empty => plugin defaults
       $final_weight = $user_weight ?: $plugin_weight;
-      $final_family = bfap_is_pro_version() ? ($user_family ?: $plugin_family) : '';
+      $final_family = FontAwesome::is_pro_version() ? ($user_family ?: $plugin_family) : '';
 
       // e.g. "fa-solid"
       $weight_class = 'fa-' . $final_weight;
